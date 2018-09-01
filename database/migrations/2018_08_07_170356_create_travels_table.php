@@ -16,10 +16,14 @@ class CreateTravelsTable extends Migration
         Schema::create('travels', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
+            $table->string('user_name');
             $table->integer('id_travel');
             $table->date('date');
             $table->integer('numb_travelers');
             $table->string('remark');
+            $table->string('statue')->default('en attendant');
+
+
 
             $table->timestamps();
         });

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\requestclient;
-use http\Url;
+use App\partnaire;
 use Illuminate\Http\Request;
-use App\Travel;
 
-class TravelController extends Controller
+class RequestpartnaireController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,18 +13,16 @@ class TravelController extends Controller
      * @return \Illuminate\Http\Response
      */
     private $rules = [
-        'id_travel' => 'required',
-        'date' => 'required',
-        'numb_travelers' => 'required',
-        'remark' => 'required',
+        'numero' => 'required',
+        'ref' => 'required',
+        'objet' => 'required',
+        'datelimite' => 'required',
+        'statu' => 'required' ,
 
     ];
-
     public function index()
     {
-        $travels = Travel::all();
-        return response()->json(['travels'=>$travels] , 200);
-
+        //
     }
 
     /**
@@ -48,28 +44,27 @@ class TravelController extends Controller
     public function store(Request $request)
     {
         $createRules = $this->rules;
-        $validator = \Validator::make($request->all(), $createRules);
+        $validator = \Validator::make($request->all() , $createRules);
         if ($validator->fails())
-            return response()->json(['errors'=>$validator->errors()], 400);
-
+            return response()->json(['errors'=>$validator->errors()],400);
         error_log('b');
 
+        $partnaire = new partnaire();
 
+        $partnaire->numero = $request->get('numero');
+        $partnaire->ref = $request->get('ref');
+        $partnaire->objet = $request->get('objet');
+        $partnaire->datelimite = $request->get('datelimite');
+        $partnaire->statu = $request->get('statu');
+        error_log('c');
 
-        $requesttravel = new Travel();
-
-        $requesttravel->id_travel = $request->get('id_travel');
-        $requesttravel->date = $request->get('date');
-        $requesttravel->numb_travelers = $request->get('numb_travelers');
-        $requesttravel->remark = $request->get('remark');
-        $requesttravel->user_id = $request->get('user_id');
-        $requesttravel->user_name = $request->get('user_name');
-
-        $result = $requesttravel->save();
-        if (!$result)
+        $result = $partnaire->save();
+        if(!$result)
             return response()->json($result, 500);
+
         else
-            return response()->json(['$requesttravel' => $requesttravel], 201);
+            error_log('d');
+            return response()->json(['$partnaire' => $partnaire] , 201);
 
 
     }
@@ -82,11 +77,7 @@ class TravelController extends Controller
      */
     public function show($id)
     {
-        $travel = Travel::find($id);
-        if($travel)
-            return response()->json(['travel' => $travel] , 200);
-        else
-            return response()->json([] , 400);
+        //
     }
 
     /**
@@ -109,13 +100,7 @@ class TravelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $travel = Travel::find($id);
-        if(!$travel)
-            return response()->json([] , 404);
-
-        $travel->statue = $request->get('statue');
-        $travel->save();
-        return response()->json(['travel' => $travel] , 201);
+        //
     }
 
     /**

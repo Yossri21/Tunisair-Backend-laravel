@@ -68,8 +68,6 @@ class RequestclientController extends Controller
         $requestclient->message = $request->get('message');
 
 
-        error_log('c');
-
 
         $result = $requestclient->save();
         if (!$result)
