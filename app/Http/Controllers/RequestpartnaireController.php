@@ -22,7 +22,8 @@ class RequestpartnaireController extends Controller
     ];
     public function index()
     {
-        //
+        $partnaires = partnaire::all();
+        return response()->json(['partnaires'=>$partnaires] , 200);
     }
 
     /**

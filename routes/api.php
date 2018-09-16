@@ -20,6 +20,7 @@ Route::group([
     Route::Post('update/{id}' , 'TravelController@update');
     Route::Post('travel' , 'TravelController@store');
     Route::Get('user' , 'UserController@index');
+    Route::Get('partnaire' , 'RequestPartnaireController@index');
     Route::Get('request', 'RequestclientController@index');
     Route::Get('listtravel','TravelController@index');
     Route::Get('get/{id}','TravelController@show');
